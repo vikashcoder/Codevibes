@@ -1,0 +1,133 @@
+
+
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1e1e2e;
+  }
+  
+  .auth-box {
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    background-color: #2e2e3e;
+    width: 320px;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #90caf9;
+    font-size: 24px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input,
+  select {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #5f5f85;
+    font-size: 16px;
+    background-color: #3b3b4f;
+    color: #90caf9;
+    outline: none;
+    transition: border 0.2s ease;
+  }
+  
+  input:focus,
+  select:focus {
+    border: 1px solid #90caf9;
+  }
+  
+  button {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #1e88e5;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    background-color: #1565c0;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .switch-btn {
+    background-color: transparent;
+    color: #90caf9;
+    border: 1px solid #90caf9;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .switch-btn:hover {
+    background-color: #90caf9;
+    color: #1e1e2e;
+  }
+  
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .auth-box {
+    animation: slideIn 0.3s ease-out;
+  }
+  .password-fields {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .password-fields input {
+    padding: 10px 30px 10px 10px;
+    border-radius: 8px;
+    border: 1px solid #5F5F85;
+    background-color: #3b3b4f;
+    color: #90CAF9;
+    width: 100%;
+  }
+  
+  .password-toggle-icons {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    bottom: -10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #90CAF9;
+    font-size: 16px;
+  }
+  
+  .password-toggle-icon:hover {
+    color: #1E88E5;
+  }

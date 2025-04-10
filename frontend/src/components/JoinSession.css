@@ -1,0 +1,71 @@
+
+/* src/components/JoinSession.css */
+
+.join-session-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: #2e2e3e;
+    width: 320px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .join-session-container:hover {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  
+  .join-session-title {
+    margin-bottom: 20px;
+    color: #90caf9;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  
+  .join-session-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .join-session-input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #5f5f85;
+    font-size: 16px;
+    background-color: #3b3b4f;
+    color: #90caf9;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .join-session-input:focus {
+    border-color: #1e88e5;
+    box-shadow: 0 0 8px rgba(30, 136, 229, 0.5);
+  }
+  
+  .join-session-button {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #1e88e5;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    font-weight: bold;
+  }
+  
+  .join-session-button:hover {
+    background-color: #1565c0;
+    transform: translateY(-2px);
+  }
+  
+  .join-session-button:active {
+    transform: translateY(0);
+  }
+  
