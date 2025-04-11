@@ -34,7 +34,7 @@ const ProfileModal = ({
       if (newAvatar) formData.append('avatar', newAvatar);
 
       const res = await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}/api/auth/profile`,
+        `${process.env.REACT_APP_API_BASE_URL}api/auth/profile`,
         formData,
         { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
       );

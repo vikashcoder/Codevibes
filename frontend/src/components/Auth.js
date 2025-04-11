@@ -12,7 +12,7 @@ const Auth = ({ setToken, setErrorMessage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? '/api/auth/login' : '/api/auth/register';
+    const url = isLogin ? 'api/auth/login' : 'api/auth/register';
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}${url}`, {
         username,

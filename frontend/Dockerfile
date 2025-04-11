@@ -1,28 +1,35 @@
-# Use Node.js for building frontend
+# Stage 1: Build the React app
 FROM node:18 AS build
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy package files
+# Copy dependency files
 COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy the rest of the project
 COPY . .
 
-# Build frontend
+# Build the app
 RUN npm run build
 
-# Use Nginx to serve frontend
-FROM nginx:alpine
+# Stage 2: Serve with `serve` package (static file server)
+FROM node:18-slim
 
-# Copy built frontend files
-COPY --from=build /app/build /usr/share/nginx/html
+# Install `serve`
+RUN npm install -g serve
 
-# Expose port
+# Copy built files from the build stage
+COPY --from=build /app/build /app/build
+
+# Set working directory
+WORKDIR /app/build
+
+# Expose port 3000
 EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+# Command to run the app
+CMD ["serve", "-s", ".", "-l", "3000"]

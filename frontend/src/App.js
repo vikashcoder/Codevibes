@@ -23,7 +23,7 @@ const App = () => {
     if (token) {
       const fetchUser = async () => {
         try {
-          const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/auth/profile`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}api/auth/profile`, {
 
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -46,7 +46,7 @@ const App = () => {
       return;
     }
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/sessions/join`, 
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}api/sessions/join`, 
         { sessionId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -55,11 +55,11 @@ const App = () => {
       setIsInSession(true);
     } catch (error) {
       if (error.response?.status === 404) {
-        // const res = await axios.post(
-        //   'http://localhost:5000/api/sessions/create',
-        //   { sessionId },
-        //   { headers: { Authorization: `Bearer ${token}` } }
-        // );
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}api/sessions/create`,
+          { sessionId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setCreator({ username: user?.username, avatar: user?.avatar });
         setIsInSession(true);
       } else {

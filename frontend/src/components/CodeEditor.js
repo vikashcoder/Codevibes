@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import './CodeEditor.css';
 
-const socket = io('http://localhost:5000', { autoConnect: false });
+const socket = io(`${process.env.REACT_APP_API_BASE_URL}`, { autoConnect: false });
 
 const debounce = (fn, delay) => {
   let timeout;
@@ -26,7 +26,7 @@ const CodeEditor = ({ sessionId, token }) => {
   const updateCodeInBackend = debounce(async (code) => {
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/api/sessions/update-code`,
+        `${process.env.REACT_APP_API_BASE_URL}api/sessions/update-code`,
         { sessionId, code },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -53,7 +53,7 @@ const CodeEditor = ({ sessionId, token }) => {
     const fetchInitialCode = async () => {
       try {
         const res = await axios.post(
-          'http://localhost:5000/api/sessions/join',
+          `${process.env.REACT_APP_API_BASE_URL}api/sessions/join`,
           { sessionId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
