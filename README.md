@@ -1,89 +1,96 @@
 📘 CodeVibe — Collaborative Code Editor
-CodeVibe is a real-time collaborative code editor built with the MERN stack, powered by WebSockets, and deployed using Google Cloud Run. It features user authentication, session-based live coding, messaging, and robust DevOps integration via GitHub Actions, Docker, GCP Monitoring, and Slack notifications.
+CodeVibe is a real-time collaborative code editor built with the MERN stack, powered by WebSockets, and deployed using Google Cloud Run. It features:
+
+✅ User authentication with avatars
+
+✅ Session-based live code editing
+
+✅ Real-time messaging
+
+✅ Robust CI/CD with GitHub Actions, Docker
+
+✅ Monitoring via GCP & Slack notifications
 
 🔗 Live Demo
+🌐 Frontend: codevibe-frontend
 
-🧠 Frontend: https://codevibe-frontend-514578696099.us-central1.run.app
-
-🛠 Backend: https://codevibe-backend-514578696099.us-central1.run.app
+🛠 Backend: codevibe-backend
 
 ⚙️ Tech Stack
-Frontend: React, Socket.io-client
-
-Backend: Express, MongoDB, Mongoose, Socket.io
-
-Authentication: JWT, bcrypt
-
-File Uploads: multer
-
-DevOps: Docker, GitHub Actions, Google Cloud Run, Slack
-
-Monitoring: Google Cloud Operations Suite (Stackdriver)
-
+Layer	Tech Used
+Frontend	React, Socket.io-client
+Backend	Express, MongoDB, Mongoose, Socket.io
+Auth	JWT, bcrypt
+File Uploads	multer
+DevOps	Docker, GitHub Actions, GCP Cloud Run
+Monitoring	Google Cloud Operations Suite (Stackdriver)
 🚀 Features
-👥 Register / Login with avatar selection
+👥 Register/Login with avatar selection
 
-👨‍💻 Real-time collaborative code editor using WebSockets
+👨‍💻 Real-time collaborative code editor (WebSockets)
 
 💬 Live chat in coding sessions
 
-📂 Upload and serve user avatars
+📂 Upload & serve user avatars
 
-🔐 Secure JWT-based authentication
+🔐 JWT-based secure authentication
 
-🧪 Automated backend testing using Jest & Supertest
+🧪 Automated backend testing (Jest + Supertest)
 
-📡 Slack notifications for CI/CD status
+📡 Slack deploy notifications via GitHub Actions
 
-📈 GCP Logs & Dashboards via Stackdriver
+📈 GCP Logs & Custom Dashboards
 
 🧪 Testing
-Backend tests written using Jest and Supertest
+✅ Jest + Supertest for automated backend testing
 
-🔧 Run locally:
+📦 Run locally:
 
 bash
 Copy
 Edit
+cd backend
+npm install
 npm test
-✅ In CI/CD: Tests automatically run on every push to main before deploy.
+⚙️ In CI/CD:
+Tests run automatically on every push to main before deployment.
 
-🐳 Deployment (CI/CD with GitHub Actions + Docker + GCP)
-CI/CD pipeline includes:
-
+🐳 CI/CD Pipeline (GitHub Actions + Docker + GCP)
 🧪 Run tests
 
-🐳 Docker build & push for frontend and backend
+🐳 Docker build & push (frontend + backend)
 
 ☁️ Deploy to Google Cloud Run
 
-🔔 Notify deployment status to Slack
+🔔 Slack notifications on deploy status
 
-📄 Sample CI/CD Workflow: See full workflow above ↑
+📂 Example Workflow:
+
+Full CI/CD GitHub Actions workflow is included in the repo under .github/workflows.
 
 📊 GCP Monitoring & Logs Setup
-✅ GCP Cloud Run automatically collects logs and metrics.
+✅ Google Cloud Run automatically logs & tracks metrics.
 
-🔧 Enable once:
+🛠 Enable once:
 
 bash
 Copy
 Edit
 gcloud services enable monitoring.googleapis.com
 gcloud services enable logging.googleapis.com
-🔍 View logs:
-GCP Console → Operations → Logging
+📍 Access:
 
-📈 Dashboards:
-GCP Console → Monitoring → Dashboards
+Logs → GCP Console → Operations → Logging
 
-🔍 Routes & API Testing via Postman
-You can use Postman or any REST client to test the backend APIs:
+Dashboards → GCP Console → Monitoring → Dashboards
+
+🔍 API Routes & Postman Testing
+Use Postman or any REST client to test the backend APIs:
 
 🔐 Auth Routes
 📝 Register
 POST /api/auth/register
-Body (JSON):
+Body:
 
 json
 Copy
@@ -96,7 +103,7 @@ Edit
 }
 🔐 Login
 POST /api/auth/login
-Body (JSON):
+Body:
 
 json
 Copy
@@ -122,7 +129,7 @@ Copy
 Edit
 Authorization: Bearer <JWT_TOKEN>
 Content-Type: multipart/form-data
-Form Data (any or all fields):
+Form Data:
 
 scss
 Copy
@@ -156,24 +163,30 @@ Copy
 Edit
 {
   "sessionId": "abc-123",
-  "code": "console.log('Hello')"
+  "code": "console.log('Hello World')"
 }
 🧠 DevOps Highlights
-✅ Dockerized frontend & backend
-✅ CI/CD via GitHub Actions
-✅ Automated backend testing
-✅ Google Cloud Run deployment
-✅ Real-time Slack notification of deploy status
-✅ Centralized monitoring/logging (Stackdriver)
+✅ Fully dockerized frontend & backend
+
+✅ End-to-end CI/CD via GitHub Actions
+
+✅ Auto-deployment to Google Cloud Run
+
+✅ Automated tests before every deployment
+
+✅ Slack notifications on deploy status
+
+✅ Stackdriver logs and custom dashboards
 
 🛡️ Security Notes
-JWT for auth
+JWT-based authentication
 
 Passwords hashed with bcrypt
 
-Sensitive routes protected via middleware
+Protected routes via middleware
 
-File uploads managed securely via multer
+Avatar uploads secured using multer
 
 👨‍💻 Author
 Made with ❤️ by Vikash Raj
+
