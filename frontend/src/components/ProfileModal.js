@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import BASE_URL from '../config'; // 👈 BASE_URL import
 import './ProfileModal.css';
 
 const ProfileModal = ({
@@ -34,7 +35,7 @@ const ProfileModal = ({
       if (newAvatar) formData.append('avatar', newAvatar);
 
       const res = await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}api/auth/profile`,
+        `${BASE_URL}api/auth/profile`,
         formData,
         { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } }
       );

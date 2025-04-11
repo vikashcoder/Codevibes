@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import BASE_URL from '../config'; // 👈 Import the BASE_URL
 import './Auth.css';
 
 const Auth = ({ setToken, setErrorMessage }) => {
@@ -14,11 +15,12 @@ const Auth = ({ setToken, setErrorMessage }) => {
     e.preventDefault();
     const url = isLogin ? 'api/auth/login' : 'api/auth/register';
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}${url}`, {
+      const res = await axios.post(`${BASE_URL}${url}`, {
         username,
         password,
         ...(isLogin ? {} : { email, gender }),
       });
+
       if (isLogin) {
         setToken(res.data.token);
       } else {

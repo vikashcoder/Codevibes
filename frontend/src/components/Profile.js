@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BASE_URL from '../config'; // 👈 Base URL import
 import './Profile.css';
 
 const Profile = ({ token }) => {
@@ -11,7 +11,7 @@ const Profile = ({ token }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}api/auth/profile`, {
+        const res = await axios.get(`${BASE_URL}api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -31,7 +31,7 @@ const Profile = ({ token }) => {
     }
     try {
       const res = await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}api/auth/profile`,
+        `${BASE_URL}api/auth/profile`,
         { username: newUsername },
         { headers: { Authorization: `Bearer ${token}` } }
       );

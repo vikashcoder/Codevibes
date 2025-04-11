@@ -1,9 +1,12 @@
+// src/Chat.js
 import React, { useEffect, useState, useCallback } from 'react';
 import io from 'socket.io-client';
 import { jwtDecode } from 'jwt-decode';
+import BASE_URL from '../config'; // 👈 yeh line add karo
 import './Chat.css';
 
-const socket = io(`${process.env.REACT_APP_API_BASE_URL}`, { autoConnect: false });
+// Socket client initialized with BASE_URL
+const socket = io(BASE_URL, { autoConnect: false });
 
 const Chat = ({ sessionId, token }) => {
   const [messages, setMessages] = useState([]);

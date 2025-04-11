@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
@@ -6,9 +5,10 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/theme/dracula.css';
 import io from 'socket.io-client';
 import axios from 'axios';
+import BASE_URL from '../config'; // 👈 Base URL import
 import './CodeEditor.css';
 
-const socket = io(`${process.env.REACT_APP_API_BASE_URL}`, { autoConnect: false });
+const socket = io(BASE_URL, { autoConnect: false });
 
 const debounce = (fn, delay) => {
   let timeout;
@@ -26,7 +26,7 @@ const CodeEditor = ({ sessionId, token }) => {
   const updateCodeInBackend = debounce(async (code) => {
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}api/sessions/update-code`,
+        `${BASE_URL}api/sessions/update-code`,
         { sessionId, code },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -34,10 +34,8 @@ const CodeEditor = ({ sessionId, token }) => {
       console.error('Failed to update code:', error.message);
     }
   }, 1000);
-  
 
   useEffect(() => {
-    // Initialize CodeMirror with settings
     editorRef.current = CodeMirror.fromTextArea(textareaRef.current, {
       mode: 'javascript',
       theme: 'dracula',
@@ -46,14 +44,12 @@ const CodeEditor = ({ sessionId, token }) => {
       autofocus: true,
     });
 
-    // Connect socket
     if (!socket.connected) socket.connect();
 
-    // Fetch initial code from backend
     const fetchInitialCode = async () => {
       try {
         const res = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}api/sessions/join`,
+          `${BASE_URL}api/sessions/join`,
           { sessionId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -67,7 +63,6 @@ const CodeEditor = ({ sessionId, token }) => {
 
     fetchInitialCode();
 
-    // Handle code changes
     const handleChange = () => {
       if (isUpdatingRef.current) return;
       const code = editorRef.current.getValue();
@@ -77,7 +72,6 @@ const CodeEditor = ({ sessionId, token }) => {
 
     editorRef.current.on('change', handleChange);
 
-    // Listen for code updates from socket
     socket.emit('joinSession', sessionId);
     socket.on('codeUpdate', (code) => {
       if (code !== editorRef.current.getValue()) {
@@ -88,7 +82,6 @@ const CodeEditor = ({ sessionId, token }) => {
       }
     });
 
-    // Clean up on unmount
     return () => {
       editorRef.current.off('change', handleChange);
       socket.off('codeUpdate');

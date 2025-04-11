@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Auth from './components/Auth';
 import CodeEditor from './components/CodeEditor';
@@ -7,6 +6,7 @@ import ProfileModal from './components/ProfileModal';
 import SessionHeader from './components/SessionHeader';
 import JoinSession from './components/JoinSession';
 import axios from 'axios';
+import BASE_URL from './config'; // 👈 yeh import kar liya
 import './App.css';
 
 const App = () => {
@@ -23,8 +23,7 @@ const App = () => {
     if (token) {
       const fetchUser = async () => {
         try {
-          const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}api/auth/profile`, {
-
+          const res = await axios.get(`${BASE_URL}api/auth/profile`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
@@ -46,17 +45,16 @@ const App = () => {
       return;
     }
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}api/sessions/join`, 
+      const res = await axios.post(`${BASE_URL}api/sessions/join`,
         { sessionId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       setCreator(res.data.creator);
       setIsInSession(true);
     } catch (error) {
       if (error.response?.status === 404) {
         const res = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}api/sessions/create`,
+          `${BASE_URL}api/sessions/create`,
           { sessionId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
