@@ -57,6 +57,139 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# name: Deploy to Google Cloud Run
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+
+#     services:
+#       mongodb:
+#         image: mongo:5.0
+#         ports:
+#           - 27017:27017
+#         options: >-
+#           --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'" 
+#           --health-interval=10s 
+#           --health-timeout=5s 
+#           --health-retries=5
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install Backend Dependencies
+#         run: |
+#           cd backend
+#           npm ci
+
+#       - name: Run Backend Tests 🧪
+#         run: |
+#           cd backend
+#           npx jest
+
+#       - name: Authenticate with Google Cloud
+#         uses: google-github-actions/auth@v0.4.0
+#         with:
+#           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+#       - name: Configure Docker
+#         run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+#       - name: Build and Push Backend Image
+#         run: |
+#           docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/codevibe/backend:latest ./backend
+#           docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/codevibe/backend:latest
+
+#       - name: Deploy Backend to Cloud Run
+#         run: |
+#           gcloud run deploy codevibe-backend \
+#             --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/codevibe/backend:latest \
+#             --platform managed \
+#             --region us-central1 \
+#             --allow-unauthenticated \
+#             --port 5000 \
+#             --set-env-vars CLIENT_URL="https://codevibe-frontend-${{ secrets.GCP_PROJECT_ID }}.run.app"
+
+#       - name: Build and Push Frontend Image
+#         run: |
+#           docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/codevibe/frontend:latest ./frontend
+#           docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/codevibe/frontend:latest
+
+#       - name: Deploy Frontend to Cloud Run
+#         run: |
+#           gcloud run deploy codevibe-frontend \
+#             --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/codevibe/frontend:latest \
+#             --platform managed \
+#             --region us-central1 \
+#             --allow-unauthenticated \
+#             --port 3000 \
+#             --set-env-vars REACT_APP_API_BASE_URL="https://codevibe-backend-${{ secrets.GCP_PROJECT_ID }}.run.app"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 name: Deploy to Google Cloud Run
 
 on:
@@ -93,10 +226,26 @@ jobs:
           cd backend
           npm ci
 
-      - name: Run Backend Tests 🧪
+      - name: Run Tests
         run: |
           cd backend
-          npx jest
+          npx jest --ci --reporters=default --reporters=jest-junit
+        env:
+          JEST_JUNIT_OUTPUT_DIR: ./test-results
+          JEST_JUNIT_OUTPUT_NAME: results.xml
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: backend/test-results
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v1
+        with:
+          name: Backend Tests
+          path: backend/test-results/results.xml
+          reporter: jest-junit
+
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v0.4.0
@@ -135,3 +284,19 @@ jobs:
             --allow-unauthenticated \
             --port 3000 \
             --set-env-vars REACT_APP_API_BASE_URL="https://codevibe-backend-${{ secrets.GCP_PROJECT_ID }}.run.app"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
