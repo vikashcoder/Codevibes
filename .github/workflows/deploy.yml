@@ -159,7 +159,13 @@ jobs:
             --allow-unauthenticated \
             --port 3000 \
             --set-env-vars REACT_APP_API_BASE_URL="https://codevibe-backend-${{ secrets.GCP_PROJECT_ID }}.run.app"
-
+      - name: Notify Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
 
